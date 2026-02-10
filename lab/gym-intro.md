@@ -19,7 +19,7 @@ Gymnasium offers
 
 I think it is a good idea to simply peruse the documentation. You will see a handful of tutorials and API docs providing adequate introduction.
 
-## The First Baby Step
+## The First Step
 Try reading and running the code described in the **Basic Usage** section https://gymnasium.farama.org/introduction/basic_usage/
 
 
