@@ -1,0 +1,8 @@
+private/
+books/
+temp/
+.DS_Store
+.idea/
+.vscode/
+.sty
+*.log
