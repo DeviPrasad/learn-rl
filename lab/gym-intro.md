@@ -36,8 +36,14 @@ In order to keep things simple, you could try to define the environment for the 
 ## The Env API
 Keep the documentation for the *Env* API open for reference: https://gymnasium.farama.org/api/env/
 
+## Environment Design Tips
+https://gymnasium.farama.org/introduction/create_custom_env/#real-world-environment-design-tips
+
 ### Initializing the Environment
 Try to understand how to derive a new environment from: https://gymnasium.farama.org/introduction/create_custom_env/#environment-init
+
+#### Note
+While trying to build this you should list all abstractions the documentation mentions as well as uses. This will help you in understanding how libraries are designed for generic use.
 
 Are you comfortable with the nouns used in the text?
 
@@ -48,8 +54,3 @@ Are you comfortable with the nouns used in the text?
  Could you navigate around and get a grasp of the following abstraction?
 
     - Box space
-
-
-
-#### TIP
-While trying to build this you should list all abstractions the documentation mentions as well as uses. This will help you in understanding how libraries are designed for generic use.
