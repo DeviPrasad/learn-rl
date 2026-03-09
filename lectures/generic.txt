@@ -1,0 +1,26 @@
+
+Review the "The 10-Armed Testbed" image and answer the following:
+
+(1) What do the K arms of the bandit problem represent?
+(2) Are the arms a collection of independent and identically distributed (i.i.d.) variables?
+
+These are not identically distributed because they have different means (0.2, -0.8, 1.6, 0.4).
+For i.i.d., all must come from the same distribution.
+In this case, they don't.
+
+Pulling Arm 1 doesn't affect Arm 2's distribution
+- Getting a reward from Arm 3 doesn't change Arm 4's mean
+- The arms are causally independent
+- No interaction or influence between arms
+
+The rewards associated with the K bandit arms is a collection independent and identically distributed (IID) variables.
+
+Q(Arm 1) = average of rewards when we pulled Arm 1
+Q(Arm 2) = average of rewards when we pulled Arm 2
+Q(Arm 3) = average of rewards when we pulled Arm 3
+.
+.
+.
+Q(Arm 10) = average of rewards when we pulled Arm 10
+
+We maintain separate statistics per action,
