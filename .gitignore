@@ -1,6 +1,5 @@
 bin/
 lib/
-pyvenv.cfg
 exercises/
 gymnasium/
 private/
@@ -8,7 +7,14 @@ books/
 temp/
 .DS_Store
 .idea/
-*.sh
 .vscode/
-.sty
+pyvenv.cfg
+*.sty
+*.sh
 *.log
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+*.pdf
