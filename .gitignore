@@ -1,8 +1,14 @@
+bin/
+lib/
+pyvenv.cfg
+exercises/
+gymnasium/
 private/
 books/
 temp/
 .DS_Store
 .idea/
+*.sh
 .vscode/
 .sty
 *.log
