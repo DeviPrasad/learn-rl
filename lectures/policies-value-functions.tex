@@ -18,14 +18,20 @@
 % Ensure other structural elements (bullets, etc.) are visible
 \setbeamercolor{structure}{fg=white}
 
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+%\setmathfont{Libertinus Math}
+\setmathfont{STIX Two Math}
+%\setmathfont{Asana Math}
+
 \newcommand{\nl}{\vspace*{1em}\\}
 \newcommand{\vsp}{\vspace*{1em}}
 
 \begin{document}
 
 \begin{frame}\frametitle{Rewards, Returns and Episodes}
-    if the sequence of rewards received after time step $t$ is $R_{t+1}, R_{t+2}, R_{t+3}, \ldots$,
-    then the $expected return$, $G_t$, is defined as the total reward from time $t$ onward:
+    If the sequence of rewards received after time step $t$ is $R_{t+1}, R_{t+2}, R_{t+3}, \ldots$,
+    then the \textit{expected return}, $G_t$, is defined as the total reward from time $t$ onward:
 
     $$
         G_t = R_{t+1} + R_{t+2} + R_{t+3} + \ldots + R_T
@@ -87,8 +93,8 @@
 
     $$
     \begin{array}{rll}
-        v_\pi(s) &=& \mathbb{E}_\pi [G_{t} | S_t = s]\nl
-            & = & \mathbb{E}_\pi \left[ \sum\limits_{k=0}^{\infty} \gamma^{k} R_{t+k+1} \middle| S_t = s \right]\!,\,\mathrm{for \ all \ } s \in \mathcal{S}  \nl
+        v_\pi(s) &=& \mathbb{E}_\pi [G_{t} \,|\, S_t = s]\nl
+            & = & \mathbb{E}_\pi \left[\, \sum\limits_{k=0}^{\infty} \gamma^{k} R_{t+k+1} \,\middle|\, S_t = s \,\right]\!,\,\mathrm{for \ all \ } s \in \mathcal{S}  \nl
     \end{array}
     $$
     \vsp
@@ -96,5 +102,77 @@
 
 \end{frame}
 
+
+\begin{frame}\frametitle{Bellman Equation for Value Function $v_\pi$}
+    A \textit{Policy} $\pi$ is a mapping from states to probabilities of selecting each possible action.\nl
+
+    If the agent is following policy $\pi$ at time $t$, then $\pi(a|s)$ is the probability that $A_t = a$ when $S_t = s$.\nl
+
+    The $\mid$ operator defines a probability distribution over $a \in \mathcal{A}(s)$ for each $s \in \mathcal{S}$.\nl
+
+\end{frame}
+
+\begin{frame}\frametitle{Bellman Equation for Value Function $v_\pi$}
+    $$
+    \noindent\begin{array}{lll}
+        v_\pi(s) &=& \mathbb{E}_\pi [G_{t} \,|\, S_t = s]\nl
+            &=&  \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \,|\, S_t = s] \nl
+    \end{array}
+    $$
+
+    The expectation is over the joint randomness of the action chosen by $\pi$, the next state, and the next reward.
+\end{frame}
+
+
+\begin{frame}\frametitle{Bellman Equation for Value Function $v_\pi$}
+    $$
+    \begin{array}{lll}
+        v_\pi(s) &=& \mathbb{E}_\pi [G_{t} \,|\, S_t = s]\nl
+            &=&  \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \,|\, S_t = s] \nl
+    \end{array}
+    $$
+
+    Actions under $\pi$ \vspace*{2mm}\\
+    \hspace*{5em}$\sum\limits_{a} \pi(a|s)$\nl
+
+    Next states and rewards \vspace{2mm}\\
+    \hspace*{5em}$\sum\limits_{s'} \sum\limits_{r} p(s', r | s, a)$\nl
+
+    Reward + Discounted reward\vspace*{2mm}\\
+    \hspace*{5em}$\bigg[\,r + \gamma \mathbb{E}_\pi \big[\,G_{t+1} \mid S_{t+1} = s'\,\big] \bigg]$
+\end{frame}
+
+
+\begin{frame}\frametitle{Bellman Equation for Value Function $v_\pi$}
+    $$
+    \hspace*{-8pt}\begin{array}{lll}
+        v_\pi(s) &=& \mathbb{E}_\pi [G_{t} \,|\, S_t = s]\nl
+            &=&  \mathbb{E}_\pi [R_{t+1} + \gamma G_{t+1} \,|\, S_t = s] \nl
+            &=&  \sum\limits_{a} \pi(a|s) \sum\limits_{s'} \sum\limits_{r} p(s', r | s, a) \,\bigg[\,r + \gamma\,\mathbb{E}_\pi \big[\,G_{t+1} \mid S_{t+1} = s'\,\big] \bigg]\,  \nl
+            &=&  \sum\limits_{a} \pi(a|s) \sum\limits_{s', r} p(s', r | s, a) \,\bigg[\,r + \gamma\, v_\pi(s') \bigg], \ \text{for all } s \in \mathcal{S}  \nl
+    \end{array}
+    $$
+\end{frame}
+
+\begin{frame}\frametitle{Backup Diagram}
+    Each open circle, $\circ$, represents a state. \nl
+    Each solid circle, $\bullet$, represents a state-action pair. \nl
+    Starting from state $s$, the agent can take action $a$ with probability $\pi(a|s)$.\nl
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{backup_diagram.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{Backup Diagram}
+    \begin{minipage}{0.54\textwidth}
+        Backup operations transfer value information \textit{back} to a state from the successor states.\nl
+        State nodes need not represent distinct states. \nl
+        \textit{A state may be its own successor.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.44\textwidth}
+        \includegraphics[width=5cm, height=4cm]{./backup_diagram.png}
+    \end{minipage}
+\end{frame}
 
 \end{document}
