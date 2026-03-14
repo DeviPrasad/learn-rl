@@ -155,8 +155,8 @@
 \end{frame}
 
 \begin{frame}\frametitle{Backup Diagram}
-    Each open circle, $\circ$, represents a state. \nl
-    Each solid circle, $\bullet$, represents a state-action pair. \nl
+    Each open circle represents a state. \nl
+    Each solid circle represents a state-action pair. \nl
     Starting from state $s$, the agent can take action $a$ with probability $\pi(a|s)$.\nl
     \begin{figure}[htbp]
         \centering
@@ -165,14 +165,165 @@
 \end{frame}
 
 \begin{frame}\frametitle{Backup Diagram}
-    \begin{minipage}{0.54\textwidth}
+    \noindent\hspace*{-5mm}\begin{minipage}{0.54\textwidth}
         Backup operations transfer value information \textit{back} to a state from the successor states.\nl
         State nodes need not represent distinct states. \nl
         \textit{A state may be its own successor.}
     \end{minipage}\hfill
-    \begin{minipage}{0.44\textwidth}
+    \noindent\begin{minipage}{0.44\textwidth}
         \includegraphics[width=5cm, height=4cm]{./backup_diagram.png}
     \end{minipage}
 \end{frame}
+
+\begin{frame}\frametitle{Optimal Policies and Optimal Value Functions}
+    The \textit{optimal state-value function} $v_*$ is the maximum value function over all policies:
+    $$
+    v_*(s) = \max\limits_\pi v_\pi(s), \ \text{for all } s \in \mathcal{S}
+    $$
+
+    The \textit{optimal action-value function} $q_*$ is the maximum action-value function over all policies:
+    $$
+    q_*(s, a) = \max\limits_\pi q_\pi(s, a), \ \text{for all } s \in \mathcal{S}, a \in \mathcal{A}(s)
+    $$
+
+    This function gives the expected return for taking action $a$ in state $s$ and
+    thereafter following the optimal policy.
+\end{frame}
+
+\begin{frame}\frametitle{Bellman Optimality Equation for $v_*$}
+    The optimal value functions satisfy the Bellman optimality equations:
+
+    \begin{align*}
+        v_*(s) &= \max\limits_{a \in \mathcal{A}(s)} q_{\pi_*}(s, a) \nl
+            &= \max\limits_{a} \mathbb{E}_{\pi_*} \, [G_t \mid S_t = s, A_t = a] \nl
+            &= \max\limits_{a} \mathbb{E}_{\pi_*} \, [R_{t+1} + \gamma G_{t+1} \mid S_t = s, A_t = a] \nl
+            &= \max\limits_{a} \mathbb{E} [R_{t+1} + \gamma v_*(S_{t+1}) \mid S_t = s, A_t = a] \nl
+            &= \max\limits_{a} \sum\limits_{s', r} p(s', r | s, a) \,\bigg[\,r + \gamma\, v_*(s') \bigg], \ \text{for all } s \in \mathcal{S} \nl
+    \end{align*}
+\end{frame}
+
+\begin{frame}\frametitle{Bellman Optimality Equation for $v_*$}
+    Note that $v_*$ takes into account the reward consequences of all possible future behavior,
+    not just the behavior of a particular policy $\pi$. \nl
+
+    This makes "greedy" policies to be optimal. \nl
+
+    One can use $v_*$ to evaluate the short-term consequences of actions,
+    specifically the one-step consequences, then the greedy policy is actually optimal.
+\end{frame}
+
+\begin{frame}\frametitle{{Bellman Optimality Equation for $q_*$}}
+    \begin{align*}
+    q_*(s, a) &= \mathbb{E}\bigg[R_{t+1} + \gamma \max\limits_{a'} q_*(S_{t+1}, a') \,\bigg|\, S_t = s, A_t = a\bigg] \nl
+              &= \sum\limits_{s', r} p(s', r | s, a) \,\bigg[r + \gamma\, \max\limits_{a'} q_*(s', a') \bigg],\\
+             & \hspace*{5cm} \text{for all } s \in \mathcal{S}, a \in \mathcal{A}(s)\\
+    \end{align*}
+\end{frame}
+
+
+\begin{frame}\frametitle{Solving Bellman Optimality Equation}
+    What do we assume?\nl
+    \begin{itemize}
+        \item we know the MDP dynamics $p(s', r | s, a)$ accurately.
+        \item we have copious computational resources to complete the calculations.
+        \item states have the Markov property.
+    \end{itemize}
+
+    This solution is rarely directly applicable to real-world problems.\nl
+\end{frame}
+
+\begin{frame}\frametitle{Solving Bellman Optimality Equation}
+    This solution is rarely directly applicable to real-world problems.\nl
+    It is a useful theoretical tool for understanding the properties of optimal policies and value functions.\nl
+    \begin{itemize}
+        \item Exhaustive search.
+        \item looking ahead at all possible future action sequences and their consequences.
+    \end{itemize}
+
+    It is a useful tool for proving the convergence of these algorithms.
+\end{frame}
+
+\begin{frame}{Approximate Solutions to RL Problems}
+    We can use the Bellman equations as the basis for iterative algorithms that approximate the value function and optimal policy.\nl
+
+    These algorithms include dynamic programming, Monte Carlo methods, and temporal-difference learning.\nl
+    \begin{itemize}
+        \item States that agent faces with low probability may be ignored.
+        \item States that are frequently encountered may be approximated more accurately.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Optimality and Apporoximation}
+    \Large{Read section 3.7 of the textbook.}\nl
+\end{frame}
+
+
+\begin{frame}\frametitle{Dynamic Programming}
+    A collection of algorithms used to compute optimal policies given
+    a perfect model of the environment as a Markov decision process.\nl
+
+    Despite their limitations, dynamic programming methods are important in
+    reinforcement learning for two reasons:
+    \begin{itemize}
+        \item they are the basis for many of the more practical methods.
+        \item they provide insight into the nature of optimal policies and value functions,
+                and the way they can be found.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Dynamic Programming}
+    The key idea of DP and of RL in general is the use of value functions to
+    organize and structure the search for optimal policies.\nl
+\end{frame}
+
+\begin{frame}\frametitle{Policy Evaluation (Prediction)}
+    The policy evaluation algorithm computes the value function $v_\pi$ for a given policy $\pi$.\nl
+
+    It is an iterative algorithm that starts with an arbitrary value function
+    and repeatedly applies the Bellman expectation
+\end{frame}
+
+\begin{frame}\frametitle{Policy Improvement}
+    The policy improvement algorithm computes a new policy $\pi'$ that is better
+    than the given policy $\pi$.\nl
+
+    It is an iterative algorithm that starts with an arbitrary policy and
+    repeatedly applies the Bellman optimality equation to improve the policy.
+\end{frame}
+
+\begin{frame}\frametitle{Policy Iteration}
+    The policy iteration algorithm combines policy evaluation and policy improvement.\nl
+    It is an iterative algorithm that starts with an arbitrary policy
+    and repeatedly applies policy evaluation and policy improvement until convergence.
+\end{frame}
+
+
+\begin{frame}\frametitle{Value Iteration}
+    The value iteration algorithm is a special case of policy iteration where
+    the policy improvement step is replaced by a value update step.\nl
+
+    It is an iterative algorithm that starts with an arbitrary value function
+    and repeatedly applies the Bellman optimality equation to improve the value function.
+\end{frame}
+
+\begin{frame}\frametitle{Asynchronous Dynamic Programming}
+    The asynchronous dynamic programming algorithm is a generalization of the value
+    iteration algorithm where the value updates are performed in an arbitrary order.\nl
+
+    It is an iterative algorithm that starts with an arbitrary value function and
+    repeatedly applies the Bellman optimality equation to improve the
+    value function in an asynchronous manner.
+\end{frame}
+
+\begin{frame}\frametitle{Generalized Policy Iteration}
+    Generalized policy iteration is a generalization of policy iteration where
+    the policy evaluation and policy improvement steps are interleaved
+    in an arbitrary manner.\nl
+
+    It is an iterative algorithm that starts with an arbitrary policy and
+    value function and repeatedly applies policy evaluation and policy improvement
+    in an interleaved manner until convergence.
+\end{frame}
+
 
 \end{document}

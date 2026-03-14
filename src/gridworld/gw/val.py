@@ -11,8 +11,7 @@ Rewards:
 
 import numpy as np
 
-# ── Grid parameters ────────────────────────────────────────────────────────────
-ROWS, COLS = 5, 5
+ROWS, COLS = 5, 5  # grid dimensions
 GAMMA = 0.9  # discount factor
 THETA = 0.001  # convergence threshold
 
@@ -33,7 +32,7 @@ B_PRIME = (2, 3)
 VALUES = []
 
 
-def show_values(iteration, values):
+def show_values(iteration: int, values: np.ndarray):
     if iteration is not None:
         print()
         print(f"Iteration {iteration}")
@@ -61,7 +60,7 @@ def show_values(iteration, values):
 
 
 # transition model - gives next state and reward for a given state and action
-def step(r, c, action):
+def step(r: int, c: int, action: str) -> tuple[int, int, float]:
     # special transitions for A and B
     if (r, c) == A:
         return (*A_PRIME, 10.0)
